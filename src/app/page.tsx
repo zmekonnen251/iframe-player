@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { MediaPlayer, MediaProvider } from '@vidstack/react';
 import {
@@ -7,12 +8,14 @@ import {
 	plyrLayoutIcons,
 } from '@vidstack/react/player/layouts/plyr';
 
-const EmbedPlayer = () => {
+const PlayerContent = () => {
 	const query = useSearchParams();
 	const videoId = query.get('videoId');
 
 	if (!videoId) return <p>Loading...</p>;
+
 	console.log({ videoId });
+
 	return (
 		<div className='aspect-video relative bg-black overflow-hidden shadow-2xl group'>
 			<MediaPlayer
@@ -38,6 +41,14 @@ const EmbedPlayer = () => {
 				/>
 			</MediaPlayer>
 		</div>
+	);
+};
+
+const EmbedPlayer = () => {
+	return (
+		<Suspense fallback={<p>Loading player...</p>}>
+			<PlayerContent />
+		</Suspense>
 	);
 };
 
