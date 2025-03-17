@@ -17,7 +17,6 @@ import {
 } from '@vidstack/react/player/layouts/plyr';
 
 const PlayerContent = () => {
-	const [showControls, setShowControls] = useState<boolean>(true);
 	const playerRef = useRef<MediaPlayerInstance>(null);
 	const query = useSearchParams();
 	const videoId = query.get('videoId');
@@ -49,9 +48,6 @@ const PlayerContent = () => {
 				autoPlay={true}
 				controls={true}
 				playsInline
-				onLoadedData={() => {
-					setShowControls(false);
-				}}
 			>
 				<MediaProvider>
 					<Poster
