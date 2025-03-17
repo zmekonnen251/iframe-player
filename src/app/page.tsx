@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useEffect, useRef } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import {
 	isYouTubeProvider,
@@ -18,6 +18,7 @@ import {
 
 const PlayerContent = () => {
 	const playerRef = useRef<MediaPlayerInstance>(null);
+	const [showControls, setShowControls] = useState(false);
 	const query = useSearchParams();
 	const videoId = query.get('videoId');
 	const isStarted = useMediaState('started', playerRef);
@@ -26,7 +27,15 @@ const PlayerContent = () => {
 		if (playerRef.current) {
 			playerRef.current?.startLoading();
 		}
-	}, [videoId]);
+
+		if (videoId) {
+			document.title = `Video Player - ${videoId}`;
+		}
+
+		if (isStarted) {
+			setShowControls(false);
+		}
+	}, [isStarted, videoId]);
 
 	if (!videoId) return <p>Loading...</p>;
 
@@ -46,8 +55,10 @@ const PlayerContent = () => {
 				src={`youtube/${videoId}`}
 				crossOrigin='anonymous'
 				autoPlay={true}
-				controls={!isStarted}
-				playsInline
+				controls={showControls && !isStarted}
+				onLoadedData={() => {
+					setShowControls(true);
+				}}
 			>
 				<MediaProvider>
 					<Poster
