@@ -46,7 +46,7 @@ const PlayerContent = () => {
 				src={`youtube/${videoId}`}
 				crossOrigin='anonymous'
 				autoPlay={true}
-				controls={true}
+				controls={!isStarted}
 				playsInline
 			>
 				<MediaProvider>
