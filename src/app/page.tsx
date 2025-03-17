@@ -18,7 +18,7 @@ import {
 
 const PlayerContent = () => {
 	const playerRef = useRef<MediaPlayerInstance>(null);
-	const [showControls, setShowControls] = useState(false);
+	const [showControls, setShowControls] = useState(true);
 	const query = useSearchParams();
 	const videoId = query.get('videoId');
 	const isStarted = useMediaState('started', playerRef);
@@ -30,10 +30,6 @@ const PlayerContent = () => {
 
 		if (videoId) {
 			document.title = `Video Player - ${videoId}`;
-		}
-
-		if (isStarted) {
-			setShowControls(false);
 		}
 	}, [isStarted, videoId]);
 
@@ -55,15 +51,15 @@ const PlayerContent = () => {
 				src={`youtube/${videoId}`}
 				crossOrigin='anonymous'
 				autoPlay={true}
-				controls={showControls && !isStarted}
+				controls={showControls}
 				onLoadedData={() => {
-					setShowControls(true);
+					setShowControls(false);
 				}}
 			>
 				<MediaProvider>
 					<Poster
 						hidden={!isStarted}
-						className='vds-poster z-50'
+						className='vds-poster z-[10000]'
 						src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
 						alt='Girl walks into campfire with gnomes surrounding her friend ready for their next meal!'
 					/>
