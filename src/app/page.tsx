@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useEffect, useRef, useState } from 'react';
+import { Suspense, useEffect, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import {
 	isYouTubeProvider,
