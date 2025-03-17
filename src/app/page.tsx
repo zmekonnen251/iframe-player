@@ -47,7 +47,7 @@ const PlayerContent = () => {
 				src={`youtube/${videoId}`}
 				crossOrigin='anonymous'
 				autoPlay={true}
-				controls={showControls}
+				controls={true}
 				playsInline
 				onLoadedData={() => {
 					setShowControls(false);
